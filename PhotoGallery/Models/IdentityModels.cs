@@ -29,5 +29,7 @@ namespace PhotoGallery.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Gallery> Galleries { get; set; }
     }
 }

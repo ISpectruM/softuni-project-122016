@@ -41,6 +41,7 @@ namespace PhotoGallery.Controllers.Admin
         }
 
         //Get: Users/List
+        [Authorize(Roles = "Admin")]
         public ActionResult List()
         {
             var context = new ApplicationDbContext();
