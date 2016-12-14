@@ -30,6 +30,8 @@ namespace PhotoGallery.Models
             return new ApplicationDbContext();
         }
 
-        public DbSet<Gallery> Galleries { get; set; }
+        public IDbSet<Gallery> Galleries { get; set; }
+
+        public IDbSet<Image> Images { get; set; }
     }
 }

@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace PhotoGallery.Controllers
 {
-    public class GalleryController : Controller
+    public class UserController : Controller
     {
-        // GET: Gallery
-        public ActionResult List()
+        // GET: User
+        public ActionResult UserPage()
         {
             return View();
         }

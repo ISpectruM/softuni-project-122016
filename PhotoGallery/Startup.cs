@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Data.Entity;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
+using PhotoGallery.Migrations;
 using PhotoGallery.Models;
 
 [assembly: OwinStartupAttribute(typeof(PhotoGallery.Startup))]
@@ -11,6 +13,8 @@ namespace PhotoGallery
     {
         public void Configuration(IAppBuilder app)
         {
+            Database.SetInitializer(
+                new MigrateDatabaseToLatestVersion<ApplicationDbContext,Configuration>());
             ConfigureAuth(app);
             CreateRolesAndUsers();
         }

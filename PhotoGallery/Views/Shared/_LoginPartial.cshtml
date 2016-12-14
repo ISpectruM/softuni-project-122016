@@ -8,8 +8,8 @@
         <div class="btn-group">
             @if (User.IsInRole("Admin"))
             {
-            <a href="#" class="btn btn-warning">Admin</a>
-            <a href="#" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
+                <a href="@Html.ActionLink("Admin page", "AdminPage", "Users")" class="btn btn-warning">Admin page</a>
+                <a href="#" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
@@ -19,7 +19,9 @@
                 </ul>
             }
         </div>
-            <a href="#" class="btn btn-primary btn-xs">My page</a>        
+        <div class="btn">
+            <a href="@Html.ActionLink("User Page", "UserPage", "User")" class="btn btn-primary btn-xs">My page</a>
+        </div>
     <ul class="nav navbar-nav navbar-right">
         <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })

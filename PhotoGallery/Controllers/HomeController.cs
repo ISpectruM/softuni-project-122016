@@ -10,11 +10,7 @@ namespace PhotoGallery.Controllers
     {
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Users");
-            }
-            return View();
+            return RedirectToAction("List", "Image");
         }
 
         public ActionResult About()

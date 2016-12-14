@@ -9,39 +9,16 @@ using PhotoGallery.Models;
 
 namespace PhotoGallery.Controllers.Admin
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
-        //Get index according to logged user/admin
-        public ActionResult Index()
+        //Get: Index
+        public ActionResult AdminPage()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = User.Identity;
-                ViewBag.Name = user.Name;
-
-                if (IsAdminUser())
-                {
-                    return View("AdminPage");
-                }
-
-                return RedirectToAction("UserPage");
-            }
-            return RedirectToAction("Index", "Home");
-        }
-
-        //Get: User/UserPage
-        public ActionResult UserPage(int?id)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return View();
-            }
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
         //Get: Users/List
-        [Authorize(Roles = "Admin")]
         public ActionResult List()
         {
             var context = new ApplicationDbContext();
@@ -68,5 +45,6 @@ namespace PhotoGallery.Controllers.Admin
             }
             return false;
         }
+
     }
 }
