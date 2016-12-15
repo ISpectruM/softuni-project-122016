@@ -21,5 +21,6 @@ namespace PhotoGallery.Controllers
             }
             return View();
         }
+
     }
 }

@@ -196,7 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\GalleryController.cs" />
+    <Compile Include="Controllers\Admin\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -277,6 +277,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Gallery\List.cshtml" />
     <Content Include="Views\Image\List.cshtml" />
+    <Content Include="Views\Gallery\Create.cshtml" />
     <None Include="Views\Users\AdminPage.cshtml" />
     <None Include="Views\Users\List.cshtml" />
     <Content Include="Views\User\UserPage.cshtml" />

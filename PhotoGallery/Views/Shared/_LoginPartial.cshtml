@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNet.Identity
-@using PhotoGallery.Controllers.Admin
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -8,19 +7,16 @@
         <div class="btn-group">
             @if (User.IsInRole("Admin"))
             {
-                <a href="@Html.ActionLink("Admin page", "AdminPage", "Users")" class="btn btn-warning">Admin page</a>
+                @Html.ActionLink("Admin page", "AdminPage", "Users", null, new {@class="btn btn-warning"})
                 <a href="#" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
+                    <li>@Html.ActionLink("Users", "List", "Users")</li>
+                    <li>@Html.ActionLink("Galleries", "List", "Gallery")</li>
                 </ul>
             }
         </div>
         <div class="btn">
-            <a href="@Html.ActionLink("User Page", "UserPage", "User")" class="btn btn-primary btn-xs">My page</a>
+            @Html.ActionLink("User Page", "UserPage", "User", null, new {@class="btn btn-primary btn-xs"})
         </div>
     <ul class="nav navbar-nav navbar-right">
         <li>

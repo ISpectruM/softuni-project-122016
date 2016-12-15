@@ -1,0 +1,20 @@
+﻿@model PhotoGallery.Models.Gallery
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Gallery</h2>
+
+<div>
+    @using (Html.BeginForm("CreateAction", "Gallery", FormMethod.Post))
+    {
+        <div>
+            @Html.LabelFor(m => m.Name)
+        </div>
+        <div>
+            @Html.TextAreaFor(m => m.Name)
+        </div>
+        <input type="submit" value="Create"/>
+    }
+</div>
+

@@ -1,7 +1,28 @@
-﻿
+﻿@model List<PhotoGallery.Models.Gallery>
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Galleries";
 }
 
-<h2>List</h2>
-
+<h2>@ViewBag.Title</h2>
+<div>
+    @Html.ActionLink("Create", "Create", "Gallery")
+    <table class="table table-striped table-hover ">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Images count</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var gallery in Model)
+        {
+            <tr>
+                <td>@gallery.Id</td>
+                <td>@gallery.Name</td>
+                <td>@gallery.Images.Count</td>
+            </tr>
+        }
+        <tbody>
+    </table>
+</div>
