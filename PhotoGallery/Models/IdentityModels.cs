@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -9,6 +11,7 @@ namespace PhotoGallery.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -16,6 +19,9 @@ namespace PhotoGallery.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public virtual ICollection<FilePath> FilePaths { get; set; }
+        public virtual ICollection<File> Files { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -33,5 +39,7 @@ namespace PhotoGallery.Models
         public IDbSet<Gallery> Galleries { get; set; }
 
         public IDbSet<Image> Images { get; set; }
+
+        public IDbSet<FilePath> FilePaths { get; set; }
     }
 }

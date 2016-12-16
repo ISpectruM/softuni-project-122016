@@ -5,8 +5,8 @@ using System.Web;
 
 namespace PhotoGallery.Models
 {
-    public class ImageViewModel: ApplicationUser
+    public enum FileType
     {
-        public IList<Image> Images { get; set; }
+        Avatar = 1, Photo
     }
 }

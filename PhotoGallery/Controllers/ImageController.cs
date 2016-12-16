@@ -10,16 +10,25 @@ namespace PhotoGallery.Controllers
 {
     public class ImageController : Controller
     {
-        // GET: Image
+        // GET: Image/List
         public ActionResult List()
         {
             using (var db = new ApplicationDbContext())
             {
-                var images = db.Images
+               var model = new ImageViewModel(); 
+               var images = db.Images
                     .Include(a=>a.Author)
                     .ToList();
+
+                model.Images = images;
+                return View(model);
             }
-            return View();
+        }
+
+        //GET: Image/Upload
+        public ActionResult Upload()
+        {
+            
         }
 
     }
