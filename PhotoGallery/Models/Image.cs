@@ -12,16 +12,17 @@ namespace PhotoGallery.Models
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(100)]
+        [MaxLength(255)]
         public string Title { get; set; }
 
         [ForeignKey("Author")]
         public string AuthorId { get; set; }
-
         public virtual ApplicationUser Author { get; set; }
 
+        [ForeignKey("Gallery")]
         public int GalleryId { get; set; }
-
         public virtual Gallery Gallery { get; set; }
+
+        public string Path { get; set; }
     }
 }

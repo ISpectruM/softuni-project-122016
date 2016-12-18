@@ -1,0 +1,48 @@
+﻿@model PhotoGallery.Models.ImageViewModel
+
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h2>Upload</h2>
+
+@using (Html.BeginForm("Upload","Image", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Image</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.GalleryId, new { @class = "control-label col-md-2" })
+            <div class="dropdown col-sm-10">
+                @Html.DropDownListFor(m => m.GalleryId,
+                    new SelectList(Model.Galleries, "Id", "Name"),
+                    new { @class = "btn btn-info col-sm-12" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <label for="photo">Upload Image:</label>
+                <input type="file" name="photo" id="photo" />
+                <hr/>
+                <input type="submit" value="Upload Image" class="btn btn-default" />
+                <br><br>
+                @ViewBag.Message
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Upload")
+</div>

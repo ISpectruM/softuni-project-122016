@@ -8,6 +8,7 @@ using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PhotoGallery.Models;
+using Image = System.Drawing.Image;
 
 namespace PhotoGallery.Controllers.Admin
 {
@@ -53,17 +54,6 @@ namespace PhotoGallery.Controllers.Admin
                 return false;
             }
             return false;
-        }
-
-        //Get images by user
-        public IList<Image> GetImagesByUser(ApplicationUser user)
-        {
-            using (var db = new ApplicationDbContext())
-            {
-                var images = db.Images.Where(a => a.Author.UserName == user.UserName).ToList();
-
-                return images;
-            }
         }
 
 

@@ -19,9 +19,6 @@ namespace PhotoGallery.Models
             // Add custom user claims here
             return userIdentity;
         }
-
-        public virtual ICollection<FilePath> FilePaths { get; set; }
-        public virtual ICollection<File> Files { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -39,7 +36,5 @@ namespace PhotoGallery.Models
         public IDbSet<Gallery> Galleries { get; set; }
 
         public IDbSet<Image> Images { get; set; }
-
-        public IDbSet<FilePath> FilePaths { get; set; }
     }
 }
