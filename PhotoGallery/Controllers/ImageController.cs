@@ -27,6 +27,7 @@ namespace PhotoGallery.Controllers
         }
 
         //GET: Image/Upload
+        [Authorize]
         public ActionResult Upload()
         {
             using (var db = new ApplicationDbContext())
@@ -51,45 +52,65 @@ namespace PhotoGallery.Controllers
                 {
                 var image = new Image();
 
-                    var authorId = db.Users
-                                .Where(a => a.UserName == this.User.Identity.Name)
-                                .First()
-                                .Id;
-                    image.AuthorId = authorId;
-                    
-                    //image upload
                     if (photo != null && photo.ContentLength > 0)
                     {
+                        if (!IsFileValid(photo.ContentType))
+                        {
+                            ViewBag.Message = "Only JPEG, JPG, PNG or GIF files are allowed!";
+                            return View("Upload");
+                        }
+                        else if (!IsFileSizeValid(photo.ContentLength))
+                        {
+                            ViewBag.Message = "The file size must be up to 1MB!";
+                            return View("Upload");
+                        }
+
                         try
                         {
-                                var fileName = Path.GetFileName(photo.FileName);
-                                fileName = fileName.Replace(" ", "_");
-                                var path = Path.Combine(Server.MapPath("~/Images"),fileName);
-                                photo.SaveAs(path);
+                            var fileName = Path.GetFileName(photo.FileName);
+                            fileName = fileName.Replace(" ", "_");
+                            var path = Path.Combine(Server.MapPath("~/Images"), fileName);
+                            photo.SaveAs(path);
 
-                                image.Path = path;
+                            var authorId = db.Users
+                            .Where(a => a.UserName == this.User.Identity.Name)
+                            .First()
+                            .Id;
 
-                                ViewBag.Message = "File uploaded successfully";
+                            image.AuthorId = authorId;
+                            image.Title = model.Title;
+                            image.GalleryId = model.GalleryId;
+                            image.Path = fileName;
+
+                            db.Images.Add(image);
+                            db.SaveChanges();
+
+                            ViewBag.Message = "File uploaded successfully";
                         }
                         catch (Exception ex)
                         {
 
-                            ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                            return ViewBag.Message = "ERROR:" + ex.Message.ToString();
                         }
                     }
                     else
                     {
-                        ViewBag.Message = "You have not specified a file.";
+                        return ViewBag.Message = "You have not specified a file.";
                     }
-
-                    image.Title = model.Title;
-                    image.GalleryId = model.GalleryId;
-
-                    db.Images.Add(image);
-                    db.SaveChanges();
                 }
             }
-            return RedirectToAction("List");
+            return RedirectToAction("Upload");
+        }
+
+        private bool IsFileValid(string contentType)
+        {
+            return contentType.Equals("image/jpeg") || contentType.Equals("image/jpg") ||
+                   contentType.Equals("image/png") || contentType.Equals("image/gif");
+        }
+
+        private bool IsFileSizeValid(int fileSize)
+        {
+            return ((fileSize/1024)/1024) < 3;
         }
     }
 }

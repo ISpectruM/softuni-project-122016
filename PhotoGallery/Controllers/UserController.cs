@@ -5,24 +5,23 @@ using PhotoGallery.Models;
 
 namespace PhotoGallery.Controllers
 {
-    [Authorize]
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Details(ApplicationUser user)
+        public ActionResult Details(string id)
         {
             var model = new UserDetailsViewModel();
-            model.Images = GetImagesByUser(user);
+            model.Images = GetImagesByUser(id);
 
             return View(model);
         }
 
         //Get images by user
-        public IList<Image> GetImagesByUser(ApplicationUser user)
+        public IList<Image> GetImagesByUser(string id)
         {
             using (var db = new ApplicationDbContext())
             {
-                var images = db.Images.Where(a => a.Author.UserName == user.UserName).ToList();
+                var images = db.Images.Where(a => a.AuthorId == id).ToList();
 
                 return images;
             }

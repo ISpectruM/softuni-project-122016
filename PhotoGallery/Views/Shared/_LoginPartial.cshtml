@@ -16,7 +16,7 @@
             }
         </div>
         <div class="btn">
-            @Html.ActionLink("User Page", "Details", "User", null, new {@class="btn btn-primary btn-xs"})
+            @Html.ActionLink("User Page", "Details", "User", new {@id = User.Identity.GetUserId()}, new {@class="btn btn-primary btn-xs"})
         </div>
     <ul class="nav navbar-nav navbar-right">
         <li>
