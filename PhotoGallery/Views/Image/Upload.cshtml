@@ -23,11 +23,11 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.GalleryId, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => m.GalleryId, new {@class = "control-label col-md-2"})
             <div class="dropdown col-sm-10">
                 @Html.DropDownListFor(m => m.GalleryId,
                     new SelectList(Model.Galleries, "Id", "Name"),
-                    new { @class = "btn btn-info col-sm-12" })
+                    new {@class = "btn btn-info col-sm-12"})
             </div>
         </div>
         <div class="form-group">

@@ -27,6 +27,11 @@ namespace PhotoGallery.Controllers
             }
         }
 
+        ////Upload an avatar image
+        //public ActionResult Avatar(string id)
+        //{
+            
+        //}
 
     }
 }

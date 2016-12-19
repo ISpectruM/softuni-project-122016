@@ -41,65 +41,76 @@ namespace PhotoGallery.Controllers
             }
         }
 
-
         //POST: Image/Upload
         [HttpPost]
+        [Authorize]
         public ActionResult Upload(ImageViewModel model, HttpPostedFileBase photo)
         {
-            if (ModelState.IsValid)
+            using (var db = new ApplicationDbContext())
             {
-                using (var db = new ApplicationDbContext())
+                var galleries = db.Galleries
+                                .OrderBy(g => g.Name)
+                                .ToList();
+                model.Galleries = galleries;
+
+                if (photo != null && photo.ContentLength > 0)
                 {
-                var image = new Image();
-
-                    if (photo != null && photo.ContentLength > 0)
+                    if (!IsFileValid(photo.ContentType))
                     {
-                        if (!IsFileValid(photo.ContentType))
-                        {
-                            ViewBag.Message = "Only JPEG, JPG, PNG or GIF files are allowed!";
-                            return View("Upload");
-                        }
-                        else if (!IsFileSizeValid(photo.ContentLength))
-                        {
-                            ViewBag.Message = "The file size must be up to 1MB!";
-                            return View("Upload");
-                        }
-
-                        try
-                        {
-                            var fileName = Path.GetFileName(photo.FileName);
-                            fileName = fileName.Replace(" ", "_");
-                            var path = Path.Combine(Server.MapPath("~/Images"), fileName);
-                            photo.SaveAs(path);
-
-                            var authorId = db.Users
-                            .Where(a => a.UserName == this.User.Identity.Name)
-                            .First()
-                            .Id;
-
-                            image.AuthorId = authorId;
-                            image.Title = model.Title;
-                            image.GalleryId = model.GalleryId;
-                            image.Path = fileName;
-
-                            db.Images.Add(image);
-                            db.SaveChanges();
-
-                            ViewBag.Message = "File uploaded successfully";
-                        }
-                        catch (Exception ex)
-                        {
-
-                            return ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                        }
+                        ViewBag.Message = "Only JPEG, JPG, PNG or GIF files are allowed!";
+                        return View(model);
                     }
-                    else
+                    else if (!IsFileSizeValid(photo.ContentLength))
                     {
-                        return ViewBag.Message = "You have not specified a file.";
+                        ViewBag.Message = "The file size must be up to 1MB!";
+                        return View(model);
+                    }
+
+                    try
+                    {
+                        var image = new Image();
+
+                        var fileName = Path.GetFileName(photo.FileName);
+                        fileName = fileName.Replace(" ", "_");
+                        var path = Path.Combine(Server.MapPath("~/Images"), fileName);
+                        photo.SaveAs(path);
+
+                        var authorId = GetAuthorId(db); 
+
+                        image.AuthorId = authorId;
+                        image.Title = model.Title;
+                        image.GalleryId = model.GalleryId;
+                        image.Path = fileName;
+
+                        db.Images.Add(image);
+                        db.SaveChanges();
+
+                        ViewBag.Message = "File uploaded successfully";
+
+                        return View(model);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                        return View(model);
                     }
                 }
+                else
+                {
+                    ViewBag.Message = "You have not specified a file.";
+                    return View(model);
+                }
             }
-            return RedirectToAction("Upload");
+        }
+
+        private string GetAuthorId(ApplicationDbContext db)
+        {
+            var authorId = db.Users
+                .Where(a => a.UserName == this.User.Identity.Name)
+                .First()
+                .Id;
+            return authorId;
         }
 
         private bool IsFileValid(string contentType)
@@ -110,7 +121,7 @@ namespace PhotoGallery.Controllers
 
         private bool IsFileSizeValid(int fileSize)
         {
-            return ((fileSize/1024)/1024) < 3;
+            return ((fileSize / 1024) / 1024) < 3;
         }
     }
 }
