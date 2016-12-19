@@ -1,5 +1,4 @@
-﻿
-@model PhotoGallery.Models.UserDetailsViewModel
+﻿@model PhotoGallery.Models.UserDetailsViewModel
 @{
     ViewBag.Title = "User Page";
 }
@@ -10,29 +9,43 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
+        <img src="~/Images/Avatar/@Model.User.Avatar" alt="Profile image" height="100" width="80" />
         <div class="form-group">
-            @Html.Label("Photo", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" id="Photo" name="upload" />
+            <div class="col-md-4">
+                @if (Model.User.Avatar==null)
+                {
+                    <label for="avatar">Upload profile photo:</label>
+                }
+                else
+                {
+                    <label for="avatar">Change your profile photo:</label>
+                }
+                <input type="file" id="avatar" name="avatar"/>
+                <br/>
+                <input type="submit" value="Submit" class="btn btn-primary btn-xs"/>
             </div>
         </div>
-        <div class="form-group">
-            <div class="btn">
-                @Html.ActionLink("Upload Photo", "Upload", "Image", null, new { @class = "btn btn-primary btn-xs" })
-            </div>
-        </div>
+        <hr/>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Thumbnail Gallery</h1>
                 </div>
-
+                <div class="form-group">
+                    <div class="btn">
+                        @Html.ActionLink("Upload new photo", "Upload", "Image", null, new { @class = "btn btn-primary btn-xs" })
+                    </div>
+                    @ViewBag.Message
+                </div>
                 @foreach (var image in Model.Images)
                 {
                     <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                         <a class="thumbnail" href="#">
                             <img class="img-responsive" src="~/Images/@image.Path" alt="image" height="200" width="300"/>
                         </a>
+                        <div class="container">
+                            @image.Title
+                        </div>
                     </div>
                 }
             </div>

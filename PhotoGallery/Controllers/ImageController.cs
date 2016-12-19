@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PhotoGallery.Models;
 
 namespace PhotoGallery.Controllers
@@ -44,23 +46,21 @@ namespace PhotoGallery.Controllers
         //POST: Image/Upload
         [HttpPost]
         [Authorize]
-        public ActionResult Upload(ImageViewModel model, HttpPostedFileBase photo)
+        public ActionResult Upload(ImageViewModel model, HttpPostedFileBase photo, HttpPostedFileBase avatar)
         {
             using (var db = new ApplicationDbContext())
             {
-                var galleries = db.Galleries
-                                .OrderBy(g => g.Name)
-                                .ToList();
-                model.Galleries = galleries;
+                model.Galleries = GetAllGalleries(db);
 
-                if (photo != null && photo.ContentLength > 0)
+                var fileForUpload = photo ?? avatar;
+                if (fileForUpload != null && fileForUpload.ContentLength > 0)
                 {
-                    if (!IsFileValid(photo.ContentType))
+                    if (!IsFileValid(fileForUpload.ContentType))
                     {
                         ViewBag.Message = "Only JPEG, JPG, PNG or GIF files are allowed!";
                         return View(model);
                     }
-                    else if (!IsFileSizeValid(photo.ContentLength))
+                    else if (!IsFileSizeValid(fileForUpload.ContentLength))
                     {
                         ViewBag.Message = "The file size must be up to 1MB!";
                         return View(model);
@@ -70,24 +70,44 @@ namespace PhotoGallery.Controllers
                     {
                         var image = new Image();
 
-                        var fileName = Path.GetFileName(photo.FileName);
+                        var fileName = Path.GetFileName(fileForUpload.FileName);
                         fileName = fileName.Replace(" ", "_");
-                        var path = Path.Combine(Server.MapPath("~/Images"), fileName);
-                        photo.SaveAs(path);
 
-                        var authorId = GetAuthorId(db); 
+                        if (photo!=null)
+                        {
+                            var path = Path.Combine(Server.MapPath("~/Images"), fileName);
+                            fileForUpload.SaveAs(path);
 
-                        image.AuthorId = authorId;
-                        image.Title = model.Title;
-                        image.GalleryId = model.GalleryId;
-                        image.Path = fileName;
+                            var authorId = GetAuthorId(db);
 
-                        db.Images.Add(image);
-                        db.SaveChanges();
+                            image.AuthorId = authorId;
+                            image.Title = model.Title;
+                            image.GalleryId = model.GalleryId;
+                            image.Path = fileName;
 
+                            db.Images.Add(image);
+                            db.SaveChanges();
+                        }
+                        else if (avatar!=null)
+                        {
+                            var path = Path.Combine(Server.MapPath("~/Images/Avatar"), fileName);
+                            fileForUpload.SaveAs(path);
+
+                            var currentUserId = User.Identity.GetUserId();
+                            var user = db.Users
+                                .First(u => u.Id == currentUserId);
+                            user.Avatar = fileName;
+                            db.Entry(user).State = EntityState.Modified;
+                            db.SaveChanges();
+
+                            ViewBag.Message = "File uploaded successfully";
+
+                            return RedirectToAction("Details", "User");
+                        }
                         ViewBag.Message = "File uploaded successfully";
 
                         return View(model);
+
                     }
                     catch (Exception ex)
                     {
@@ -102,6 +122,14 @@ namespace PhotoGallery.Controllers
                     return View(model);
                 }
             }
+        }
+
+        private ICollection<Gallery> GetAllGalleries(ApplicationDbContext db)
+        {
+            var galleries = db.Galleries
+                .OrderBy(g => g.Name)
+                .ToList();
+            return galleries;
         }
 
         private string GetAuthorId(ApplicationDbContext db)

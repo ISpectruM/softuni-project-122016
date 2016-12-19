@@ -11,7 +11,7 @@ namespace PhotoGallery.Models
 
         public IList<Image> Images { get; set; }
 
-        //public IList<Image> ImagesByUser { get; set; }
+        public HttpPostedFileBase Avatar { get; set; }
 
 
         public IList<Image> ImagesByUser(ApplicationUser user)

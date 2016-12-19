@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PhotoGallery.Models;
 
 namespace PhotoGallery.Controllers
@@ -8,10 +10,18 @@ namespace PhotoGallery.Controllers
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Details(string id)
+        public ActionResult Details()
         {
+            var id = User.Identity.GetUserId();
+
             var model = new UserDetailsViewModel();
             model.Images = GetImagesByUser(id);
+
+            using (var db = new ApplicationDbContext())
+            {
+                var user = db.Users.First(u => u.Id == id);
+                model.User = user;
+            }
 
             return View(model);
         }
@@ -21,7 +31,10 @@ namespace PhotoGallery.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                var images = db.Images.Where(a => a.AuthorId == id).ToList();
+                var images = db.Images
+                    .Where(a => a.AuthorId == id)
+                    .Include(i => i.Author)
+                    .ToList();
 
                 return images;
             }
