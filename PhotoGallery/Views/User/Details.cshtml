@@ -2,60 +2,64 @@
 @{
     ViewBag.Title = "User Page";
 }
-<h2>UserPage</h2>
+<div style="">
+    <div class="row-new alpha60">
+        <div class="row-new">
 
-@using (Html.BeginForm("Upload", "Image", null, FormMethod.Post, new { enctype = "multipart/form-data" })) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <img src="~/Images/Avatar/@Model.User.Avatar" alt="Profile image" height="100" width="80" />
-        <div class="form-group">
-            <div class="col-md-4">
-                @if (Model.User.Avatar==null)
-                {
-                    <label for="avatar">Upload profile photo:</label>
-                }
-                else
-                {
-                    <label for="avatar">Change your profile photo:</label>
-                }
-                <input type="file" id="avatar" name="avatar"/>
-                <br/>
-                <input type="submit" value="Submit" class="btn btn-primary btn-xs"/>
-            </div>
-        </div>
-        <hr/>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Thumbnail Gallery</h1>
-                </div>
-                <div class="form-group">
-                    <div class="btn">
-                        @Html.ActionLink("Upload new photo", "Upload", "Image", null, new { @class = "btn btn-primary btn-xs" })
+            <h2>@Model.User.UserName Page</h2>
+            @using (Html.BeginForm("Upload", "Image", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-xs-1">
+                        <img src="~/Images/Avatar/@Model.User.Avatar" alt="Profile image" height="100" width="80" />
                     </div>
-                    @ViewBag.Message
-                </div>
-                @foreach (var image in Model.Images)
-                {
-                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                        <a class="thumbnail" href="@Url.Action("Details", "Image",new {@id=image.Id})">
-                            <img class="img-responsive" src="~/Images/@image.Path" alt="image" height="200" width="300"/>
-                        </a>
-                        <div class="container">
-                            @image.Title
-                            <div class="pull-right">
-                                <p>Votes:@image.Vote</p>
-                            </div>
+                    <div class="col-xs-4">
+                        @if (Model.User.Avatar == null)
+                        {
+                            <label for="avatar">Upload profile photo:</label>
+                        }
+                        else
+                        {
+                            <label for="avatar">Change your profile photo:</label>
+                        }
+                        <input type="file" id="avatar" name="avatar" class="btn btn-default btn-xs"/>
+                        <div style="margin-top: 5px">
+                            <input type="submit" value="Submit" class="btn btn-warning btn-xs" />
                         </div>
                     </div>
-                }
-            </div>
+                </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1 class="page-header">My photo`s</h1>
+                            </div>
+                            <div class="form-group">
+                                <div class="btn">
+                                    @Html.ActionLink("Upload new photo", "Upload", "Image", null, new { @class = "btn btn-warning btn-xs" })
+                                </div>
+                                @ViewBag.Message
+                            </div>
+                            @foreach (var image in Model.Images)
+                {
+                                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                    <a class="thumbnail" href="@Url.Action("Details", "Image",new {@id=image.Id})">
+                                        <img class="img-responsive" src="~/Images/@image.Path" alt="image" height="200" width="300" />
+                                    </a>
+                                    <div class="container">
+                                        @image.Title
+                                        <div class="pull-right">
+                                            <p>Votes:@image.Vote</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+            }
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
         </div>
     </div>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+</div>

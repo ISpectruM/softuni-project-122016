@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -31,7 +30,7 @@ namespace PhotoGallery.Controllers
 
         //Get images by gallery
         public ActionResult ListGalleryImgages(int?id)
-        {
+         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -44,6 +43,8 @@ namespace PhotoGallery.Controllers
                     .Where(g => g.GalleryId == id)
                     .Include(i=>i.Author)
                     .ToList();
+                var currentGalery = db.Galleries.First(g => g.Id == id);
+                model.Gallery = currentGalery;
                 model.Images = galleryImages;
                 
                 return View(model);

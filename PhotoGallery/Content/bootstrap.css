@@ -52,7 +52,7 @@ audio:not([controls]) {
 }
 
 html {
-  font-family: sans-serif;
+  font-family: fantasy;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
@@ -311,11 +311,13 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.428571429;
-  color: #333333;
-  background-color: #ffffff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #333333;
+    background-color: grey;
+    background-image: url('img/IMG_4649.jpg');
+   
 }
 
 input,
@@ -783,6 +785,23 @@ pre code {
   clear: both;
 }
 
+.row-new {
+    margin-top: 10px;
+    padding: 10px 10px 10px 10px;
+    border-color: #ffffff;
+    border-width: medium;
+    
+}
+.alpha60 {
+    /* Fallback for web browsers that doesn't support RGBa */
+    background: rgb(128, 128, 128);
+    /* RGBa with 0.6 opacity */
+    background: rgba(128, 128, 128, 0.6);
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+    /* For IE 8*/
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
 .row {
   margin-right: -15px;
   margin-left: -15px;

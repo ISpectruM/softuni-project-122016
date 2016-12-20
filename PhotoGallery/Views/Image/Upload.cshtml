@@ -4,14 +4,13 @@
     ViewBag.Title = "Upload";
 }
 
-<h2>Upload</h2>
+<h2>Upload photo</h2>
 
 @using (Html.BeginForm("Upload","Image", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Image</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -43,6 +42,3 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Upload")
-</div>

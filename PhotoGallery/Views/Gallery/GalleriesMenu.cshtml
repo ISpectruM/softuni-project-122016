@@ -3,12 +3,14 @@
     ViewBag.Title = null;
 }
 <div class="btn-group">
-    @Html.ActionLink("Galleries", "List", "Users", null, new { @class = "btn btn-default" })
-    <a href="#" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
+    @Html.ActionLink("Galleries", "List", "Gallery", null, new { @class = "btn btn-default btn-xs" })
+    <a href="#" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
     <ul class="dropdown-menu">
         @foreach (var gallery in Model.Galleries)
         {
-            <li>@Html.ActionLink(gallery.Name, "ListGalleryImgages", "Image", new { id = gallery.Id },null)</li>
+            <li>
+                    @Html.ActionLink(gallery.Name, "ListGalleryImgages", "Image", new { id = gallery.Id }, null)
+            </li>
         }
     </ul>
 </div>

@@ -1,40 +1,69 @@
 ﻿@using Microsoft.AspNet.Identity
-
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-        
-        <div class="pull-left">
-            @{ Html.RenderAction("GalleriesMenu", "Gallery");}
-        </div>
-        <div class="btn-group">
-            @if (User.IsInRole("Admin"))
-            {
-                @Html.ActionLink("Admin page", "AdminPage", "Users", null, new {@class = "btn btn-warning"})
-                <a href="#" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li>@Html.ActionLink("Users", "List", "Users")</li>
-                    <li>@Html.ActionLink("Galleries", "List", "Gallery")</li>
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+            <div class="row">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <div class="btn">
+                            <div class="btn-group">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    @Html.ActionLink("Admin page", "AdminPage", "Users", null, new { @class = "btn btn-warning btn-xs" })
+                                    <a href="#" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Users", "List", "Users")</li>
+                                        <li>@Html.ActionLink("Galleries", "List", "Gallery")</li>
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn">
+                            @{ Html.RenderAction("GalleriesMenu", "Gallery");}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn">
+                            @Html.ActionLink("User Page", "Details", "User", new { id = User.Identity.GetUserId() }, new { @class = "btn btn-default btn-xs" })
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn">
+                            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "btn btn-default btn-xs", title = "Manage" })
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn">
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-xs">Log off</a>
+                        </div>
+                    </li>
                 </ul>
-            }
+            </div>
         </div>
-        <div class="btn">
-            @Html.ActionLink("User Page", "Details", "User", new { id = User.Identity.GetUserId() }, new { @class = "btn btn-primary btn-xs" })
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-        </ul>
-    }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
-}
+                                    }
+                                }
+                                else
+                                {
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li>
+                                            <div class="btn">
+                                                @{ Html.RenderAction("GalleriesMenu", "Gallery");}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="btn">
+                                                @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class= "btn btn-default btn-xs" })
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="btn">
+                                                @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-default btn-xs" })
+                                            </div>                                        
+                                        </li>
+                                    </ul>
+                                                    }

@@ -2,27 +2,32 @@
 @{
     ViewBag.Title = "Galleries";
 }
-
-<h2>@ViewBag.Title</h2>
-<div>
-    @Html.ActionLink("Create", "Create", "Gallery")
-    <table class="table table-striped table-hover ">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Images count</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var gallery in Model)
-        {
-            <tr>
-                <td>@gallery.Id</td>
-                <td>@gallery.Name</td>
-                <td>@gallery.Images.Count</td>
-            </tr>
-        }
-        <tbody>
-    </table>
+<div style="">
+    <div class="row-new alpha60">
+        <div class="row-new">
+            <h2>@ViewBag.Title</h2>
+            @Html.ActionLink("Create", "Create", "Gallery", new { @class = "btn btn-warning" })
+        </div>
+        <div>
+            <table class="table table-striped table-hover ">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Images count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var gallery in Model)
+            {
+                        <tr>
+                            <td>@gallery.Id</td>
+                            <td>@gallery.Name</td>
+                            <td>@gallery.Images.Count</td>
+                        </tr>
+                    }
+                <tbody>
+            </table>
+        </div>
+    </div>
 </div>

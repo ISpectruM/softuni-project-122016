@@ -14,6 +14,7 @@ namespace PhotoGallery.Models
         public ICollection<Gallery> Galleries { get; set; }
         public HttpPostedFileBase Photo { get; set; }
         public Image Image { get; set; }
+        public Gallery Gallery { get; set; }
 
     }
 }

@@ -2,8 +2,17 @@
 @{
     ViewBag.Title = "Vote";
 }
+<div style="">
+    <div class="row-new alpha60">
+        <div class="row-new">
 
-<h2>Thank you for your vote!</h2>
-<a href="@Url.Action("Details","Image", new {@id=Model.Image.Id})">Head back to the photo!</a>
-<a href="@Url.Action("Details", "User")">Back to user images</a>
+            <h2>Thank you for your vote!</h2>
+            <div class="btn-group-vertical">
+                <a href="@Url.Action("Details","Image", new {@id=Model.Image.Id})" class="btn btn-default">Head back to the photo!</a>
+                <a href="@Url.Action("Details", "User")" class="btn btn-default">Back to user images</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 

@@ -3,13 +3,11 @@
     ViewBag.Title = "ListGalleryImgages";
 }
 
-<h2>ListGalleryImgages</h2>
-
+<h2>@Model.Gallery.Name Gallery</h2>
+<hr/>
 <div class="container">
-
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Thumbnail Gallery</h1>
         </div>
         @foreach (var image in Model.Images)
         {

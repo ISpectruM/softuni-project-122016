@@ -2,12 +2,15 @@
 @{
     ViewBag.Title = "Admin Page";
 }
-
-<div>
-    <header>@ViewBag.Title</header>
-
-    <div>
-        @Html.ActionLink("Users", "List", "Users")
-        @Html.ActionLink("Galeries", "List", "Gallery")
+<div style="">
+    <div class="row-new alpha60">
+        <div class="row-new">
+            <h3>@ViewBag.Title</h3>
+            <div class="btn-group btn-group-sm">
+                @Html.ActionLink("Users", "List", "Users", new {@class = "btn btn-warning"})
+                @Html.ActionLink("Galeries", "List", "Gallery", new {@class = "btn btn-warning"})
+            </div>
+        </div>
     </div>
 </div>
+

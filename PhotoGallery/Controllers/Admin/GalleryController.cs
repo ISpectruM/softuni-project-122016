@@ -45,7 +45,7 @@ namespace PhotoGallery.Controllers.Admin
             return RedirectToAction("List");
         }
 
-        //Render the galleri drop down menu
+        //Render the gallery drop down menu
         public PartialViewResult GalleriesMenu()
         {
             using (var db = new ApplicationDbContext())
