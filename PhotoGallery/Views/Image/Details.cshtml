@@ -1,0 +1,23 @@
+﻿@model PhotoGallery.Models.ImageViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Model.Image.Title</h2>
+
+@using (Html.BeginForm("Details", "Image", null))
+{
+    <div class="container">
+        <div style="background-color: grey" align="center">
+            <img class="img-responsive" src="~/Images/@Model.Image.Path" width="600" />
+        </div>
+        <div>
+            <a href="@Url.Action("Vote", "Image",new {@id=Model.Image.Id})">Vote!</a>
+            <p>Votes:@Model.Image.Vote</p>
+        </div>
+
+    </div>
+
+}
+
+

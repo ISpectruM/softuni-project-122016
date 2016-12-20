@@ -10,10 +10,8 @@ namespace PhotoGallery.Controllers
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Details()
+        public ActionResult Details(string id)
         {
-            var id = User.Identity.GetUserId();
-
             var model = new UserDetailsViewModel();
             model.Images = GetImagesByUser(id);
 

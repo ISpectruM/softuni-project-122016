@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -24,6 +25,19 @@ namespace PhotoGallery.Controllers
                     .ToList();
 
                 model.Images = images;
+                return View(model);
+            }
+        }
+
+        //GET: Image/Details
+        public ActionResult Details(int? id)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var model = new ImageViewModel();
+                var image = db.Images.First(i => i.Id == id);
+                model.Image = image;
+
                 return View(model);
             }
         }
@@ -73,7 +87,8 @@ namespace PhotoGallery.Controllers
                         var fileName = Path.GetFileName(fileForUpload.FileName);
                         fileName = fileName.Replace(" ", "_");
 
-                        if (photo!=null)
+                        //Upload photo to galleries
+                        if (photo != null)
                         {
                             var path = Path.Combine(Server.MapPath("~/Images"), fileName);
                             fileForUpload.SaveAs(path);
@@ -88,7 +103,9 @@ namespace PhotoGallery.Controllers
                             db.Images.Add(image);
                             db.SaveChanges();
                         }
-                        else if (avatar!=null)
+
+                        //Upload avatar image
+                        else if (avatar != null)
                         {
                             var path = Path.Combine(Server.MapPath("~/Images/Avatar"), fileName);
                             fileForUpload.SaveAs(path);
@@ -122,6 +139,31 @@ namespace PhotoGallery.Controllers
                     return View(model);
                 }
             }
+        }
+
+        //Get votes
+        public ActionResult Vote(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            using (var db = new ApplicationDbContext())
+                {
+                    var model = new ImageViewModel();
+                    var image = db.Images.First(i => i.Id == id);
+
+                    var imgVotes = db.Images.First(i => i.Id == id).Vote;
+                    imgVotes++;
+                    image.Vote = imgVotes;
+
+                    model.Image = image;
+                    
+                    db.Entry(image).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return View(model);
+                }
         }
 
         private ICollection<Gallery> GetAllGalleries(ApplicationDbContext db)

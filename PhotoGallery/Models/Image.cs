@@ -24,5 +24,7 @@ namespace PhotoGallery.Models
         public virtual Gallery Gallery { get; set; }
 
         public string Path { get; set; }
+
+        public int Vote { get; set; }
     }
 }

@@ -281,6 +281,8 @@
     <Content Include="Views\Image\List.cshtml" />
     <Content Include="Views\Gallery\Create.cshtml" />
     <Content Include="Views\Image\Upload.cshtml" />
+    <Content Include="Views\Image\Details.cshtml" />
+    <Content Include="Views\Image\Vote.cshtml" />
     <None Include="Views\Users\AdminPage.cshtml" />
     <None Include="Views\Users\List.cshtml" />
     <Content Include="Views\User\Details.cshtml" />

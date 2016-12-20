@@ -1,0 +1,9 @@
+﻿@model PhotoGallery.Models.ImageViewModel
+@{
+    ViewBag.Title = "Vote";
+}
+
+<h2>Thank you for your vote!</h2>
+<a href="@Url.Action("Details","Image", new {@id=Model.Image.Id})">Head back to the photo!</a>
+<a href="@Url.Action("Details", "User")">Back to user images</a>
+

@@ -40,11 +40,14 @@
                 @foreach (var image in Model.Images)
                 {
                     <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                        <a class="thumbnail" href="#">
+                        <a class="thumbnail" href="@Url.Action("Details", "Image",new {@id=image.Id})">
                             <img class="img-responsive" src="~/Images/@image.Path" alt="image" height="200" width="300"/>
                         </a>
                         <div class="container">
                             @image.Title
+                            <div class="pull-right">
+                                <p>Votes:@image.Vote</p>
+                            </div>
                         </div>
                     </div>
                 }
