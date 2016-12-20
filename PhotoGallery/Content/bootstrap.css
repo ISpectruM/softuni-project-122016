@@ -317,6 +317,8 @@ body {
     color: #333333;
     background-color: grey;
     background-image: url('img/IMG_4649.jpg');
+    background-repeat:no-repeat;
+    background-size:cover;
    
 }
 
