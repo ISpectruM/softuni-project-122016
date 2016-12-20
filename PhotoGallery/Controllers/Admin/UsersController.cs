@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PhotoGallery.Models;
-using Image = System.Drawing.Image;
 
 namespace PhotoGallery.Controllers.Admin
 {
@@ -27,12 +21,9 @@ namespace PhotoGallery.Controllers.Admin
             using (var db = new ApplicationDbContext())
             {
                 var model = new UsersViewModel();
-                //var imagesByUser = GetImagesByUser(user);
                 var users = db.Users
                     .ToList();
                 model.Users = users;
-                //model.ImagesByUser = imagesByUser;
-
                 return View(model);
             }
         }

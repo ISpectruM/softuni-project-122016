@@ -29,9 +29,34 @@ namespace PhotoGallery.Controllers
             }
         }
 
+        //Get images by gallery
+        public ActionResult ListGalleryImgages(int?id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var db = new ApplicationDbContext())
+            {
+                var model = new ImageViewModel();
+                var galleryImages = db.Images
+                    .Where(g => g.GalleryId == id)
+                    .Include(i=>i.Author)
+                    .ToList();
+                model.Images = galleryImages;
+                
+                return View(model);
+            }
+        }
+
         //GET: Image/Details
         public ActionResult Details(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             using (var db = new ApplicationDbContext())
             {
                 var model = new ImageViewModel();

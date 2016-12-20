@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PhotoGallery.Models;
 
 namespace PhotoGallery.Controllers.Admin
 {
-    [Authorize(Roles = "Admin")]
     public class GalleryController : Controller
     {
         // GET: Gallery
@@ -25,6 +21,7 @@ namespace PhotoGallery.Controllers.Admin
             }
         }
 
+        [Authorize(Roles = "Admin")]
         //GET: Gallery/Create
         public ActionResult Create()
         {
@@ -33,6 +30,7 @@ namespace PhotoGallery.Controllers.Admin
 
         //POST: Gallery/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateAction(Gallery gallery)
         {
             if (ModelState.IsValid)
@@ -45,6 +43,22 @@ namespace PhotoGallery.Controllers.Admin
             }
 
             return RedirectToAction("List");
+        }
+
+        //Render the galleri drop down menu
+        public PartialViewResult GalleriesMenu()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var model = new ImageViewModel();
+                var galleries = db.Galleries
+                    .Include(g => g.Images)
+                    .OrderBy(g => g.Name)
+                    .ToList();
+                model.Galleries = galleries;
+
+                return PartialView(model);
+            }
         }
 
 

@@ -10,7 +10,6 @@ namespace PhotoGallery.Models
     public class Gallery
     {
         private ICollection<Image> images;
-
         public Gallery()
         {
             this.images = new HashSet<Image>();

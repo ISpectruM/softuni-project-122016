@@ -254,9 +254,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -283,6 +280,10 @@
     <Content Include="Views\Image\Upload.cshtml" />
     <Content Include="Views\Image\Details.cshtml" />
     <Content Include="Views\Image\Vote.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\ListGalleryImg.cshtml" />
+    <Content Include="Views\Gallery\GalleriesMenu.cshtml" />
+    <Content Include="Views\Image\ListGalleryImgages.cshtml" />
     <None Include="Views\Users\AdminPage.cshtml" />
     <None Include="Views\Users\List.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
