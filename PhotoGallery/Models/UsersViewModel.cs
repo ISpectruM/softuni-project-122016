@@ -13,7 +13,6 @@ namespace PhotoGallery.Models
 
         public HttpPostedFileBase Avatar { get; set; }
 
-
         public IList<Image> ImagesByUser(ApplicationUser user)
         {
             using (var db = new ApplicationDbContext())

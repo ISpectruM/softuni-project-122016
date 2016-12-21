@@ -11,15 +11,15 @@
         </div>
         @foreach (var image in Model.Images)
         {
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <div class="thumbnail">
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb" style="padding-bottom: 10px">
+                <div class="thumbnail" align="center">
                     <a href="@Url.Action("Details","Image", new {id=image.Id})">
-                        <img class="img-responsive" src="~/Images/@image.Path" alt="image" height="200" width="300" />
+                        <img class="img-responsive" src="~/Images/@image.Path" alt="image" style="max-height: 172px" />
                     </a>
-                    <div class="caption">
-                        <p>Title: @image.Title</p>
+                    <div class="caption" align="left">
+                        <p><b>Title:</b><i>@image.Title</i></p>
                         <div class="pull-right">
-                            <p>Votes:@image.Vote</p>
+                            <p><b>Votes:@image.Vote</b></p>
                         </div>
                         <div>
                             <p>Author: <a href="@Url.Action("Details", "User",new {id=image.Author.Id})">@image.Author.UserName</a></p>

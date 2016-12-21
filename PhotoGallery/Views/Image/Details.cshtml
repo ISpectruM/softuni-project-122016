@@ -2,25 +2,32 @@
 @{
     ViewBag.Title = null;
 }
-<h2>Title:"@Model.Image.Title"</h2>
+<h2>Image details</h2>
 @using (Html.BeginForm("Details", "Image", null))
 {
-    <div style="">
+    <div>
         <div class="row-new alpha60">
-            <div class="row-new">
                 <div align="center">
-                    <img class="img-responsive" src="~/Images/@Model.Image.Path" width="600" />
-                </div>
-                <hr/>
-                <div class="row">
-                    <div class="col-sm-1">
-                        <a href="@Url.Action("Vote", "Image",new {@id=Model.Image.Id})" class="btn btn-warning btn-xs">Vote!</a>
+                    <img class="img-responsive" src="~/Images/@Model.Image.Path" style="max-width: 680px" />
+                    <hr />
+                    <div class="row">
+                        <div class="infoline" style="padding: 3%; margin:15px; background-color: cornsilk">
+                            <div class="col-sm-1">
+                                <a href="@Url.Action("Vote", "Image", new {@id = Model.Image.Id})" class="btn btn-warning btn-xs">Vote!</a>
+                            </div>
+                            <div class="col-sm-1">
+                                <p>
+                                    <b>Votes:@Model.Image.Vote</b>
+                                </p>
+                            </div>
+                            <div class="col-lg-6" align="left">
+                                <p>
+                                    <b>Title:</b><i>"@Model.Image.Title"</i>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-1">
-                        <p>Votes:@Model.Image.Vote</p>
-                    </div>
                 </div>
-            </div>
         </div>
     </div>
 }

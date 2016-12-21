@@ -13,7 +13,7 @@ namespace PhotoGallery.Controllers
 {
     public class ImageController : Controller
     {
-        // GET: Image/List
+        //GET: Image/List
         public ActionResult List()
         {
             using (var db = new ApplicationDbContext())

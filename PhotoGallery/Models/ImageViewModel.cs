@@ -15,6 +15,5 @@ namespace PhotoGallery.Models
         public HttpPostedFileBase Photo { get; set; }
         public Image Image { get; set; }
         public Gallery Gallery { get; set; }
-
     }
 }

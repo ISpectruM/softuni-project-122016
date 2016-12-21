@@ -13,6 +13,5 @@ namespace PhotoGallery.Models
 
         public IList<Image> Images { get; set; }
 
-
     }
 }
