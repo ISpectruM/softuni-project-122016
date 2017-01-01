@@ -12,16 +12,16 @@
                 @Html.AntiForgeryToken()
                 <div class="row">
                     <div class="col-xs-1">
-                        <img src="~/Images/Avatar/@Model.User.Avatar" alt="Profile image" height="100" width="80" />
+                        <img src="~/Images/Avatar/@Model.User.Avatar" alt="Upload profile photo" height="100" width="80" />
                     </div>
                     <div class="col-xs-4">
-                        @if (Model.User.Avatar == null)
+                        @if (Model.User.Avatar != null)
                         {
-                            <label for="avatar">Upload profile photo:</label>
+                            <label for="avatar">Change your profile photo:</label>
                         }
                         else
                         {
-                            <label for="avatar">Change your profile photo:</label>
+                            <label for="avatar"></label>
                         }
                         <input type="file" id="avatar" name="avatar" class="btn btn-default btn-xs"/>
                         <div style="margin-top: 5px">
@@ -38,7 +38,9 @@
                                 <div class="btn">
                                     @Html.ActionLink("Upload new photo", "Upload", "Image", null, new { @class = "btn btn-warning btn-xs" })
                                 </div>
-                                @ViewBag.Message
+                                <div class="text-danger">
+                                    @ViewBag.Message
+                                </div>
                             </div>
                             @foreach (var image in Model.Images)
                                 {

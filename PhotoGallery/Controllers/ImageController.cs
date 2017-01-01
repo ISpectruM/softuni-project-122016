@@ -217,7 +217,7 @@ namespace PhotoGallery.Controllers
 
         private bool IsFileSizeValid(int fileSize)
         {
-            return ((fileSize / 1024) / 1024) < 3;
+            return ((fileSize / 1024) / 1024) < 1;
         }
     }
 }
